@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="root" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8.0.241" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.emotiondetector.Controller">
+   <bottom>
+      <HBox alignment="CENTER" fillHeight="false" prefHeight="30.0" BorderPane.alignment="CENTER">
+         <children>
+      			<Button fx:id="cameraButton" alignment="center" onAction="#startCamera" text="Start camera" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="openFileButton" alignment="center" onAction="#openFile" text="Open File" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="detectEmotionButton" disable="true" mnemonicParsing="false" onAction="#detectEmotions" text="Detect Emotions" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets top="10.0" />
+         </BorderPane.margin>
+      </HBox>
+   </bottom>
+   <right>
+      <VBox alignment="CENTER" fillWidth="false" prefWidth="375.0" BorderPane.alignment="CENTER">
+         <children>
+            <BarChart fx:id="barChart" animated="false" legendVisible="false" prefHeight="375.0" prefWidth="375.0" title="Emotion detected">
+      	        <xAxis>
+      	          <CategoryAxis label="Emotion" side="BOTTOM" tickLabelRotation="90.0">
+                     <tickLabelFont>
+                        <Font size="10.0" />
+                     </tickLabelFont></CategoryAxis>
+      	        </xAxis>
+      	        <yAxis>
+      	          <NumberAxis label="Value" side="LEFT">
+                     <tickLabelFont>
+                        <Font size="10.0" />
+                     </tickLabelFont></NumberAxis>
+      	        </yAxis>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </BarChart>
+            <Label fx:id="capturedFaceLabel" text="Captured face:">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="capturedFaceImageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+               <VBox.margin>
+                  <Insets bottom="15.0" top="5.0" />
+               </VBox.margin></ImageView>
+            <HBox fx:id="periodHBox" alignment="CENTER" layoutX="106.0" layoutY="590.0">
+               <children>
+                  <Label fx:id="nnPeriodLabel" prefHeight="25.0" prefWidth="321.0" text="Period of the neural network prediction request (s): ">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="periodTextField" prefHeight="25.0" prefWidth="42.0" text="1" />
+               </children>
+            </HBox>
+            <Label fx:id="nnPredictionsLabel" alignment="CENTER" contentDisplay="CENTER" text="Save the neural network predictions as:" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="5.0" top="20.0" />
+               </VBox.margin>
+            </Label>
+            <HBox>
+               <children>
+                  <CheckBox fx:id="imagesCheckBox" mnemonicParsing="false" selected="true" text="Images">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </CheckBox>
+                  <CheckBox fx:id="csvCheckBox" layoutX="169.0" layoutY="10.0" mnemonicParsing="false" selected="true" text=".csv file">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </CheckBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <Label fx:id="nnSaveLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="12.0" layoutY="613.0" text="They will be saved in the ./predictions/ folder." textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+   </right>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="fileLabel" alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="640.0" text="Chosen file: none" wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </Label>
+      			<ImageView fx:id="imageStreamImageView" fitHeight="480.0" fitWidth="640.0" preserveRatio="true" />
+            <HBox fx:id="progressBarHBox" alignment="CENTER" prefHeight="25.0" visible="false">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="70.0" text="Progress:" textAlignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <ProgressBar fx:id="progressBar" prefHeight="25.0" prefWidth="200.0" progress="0.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin></ProgressBar>
+                  <Label fx:id="progressBarLabel" alignment="CENTER" prefHeight="22.0" prefWidth="49.0" text="0%" textAlignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+   <left>
+      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="10.0" top="5.0" />
+         </padding>
+      </VBox>
+   </left>
+   <top>
+      <StackPane prefHeight="55.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="TOP_CENTER" text="Input" StackPane.alignment="TOP_CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <HBox alignment="BOTTOM_CENTER" StackPane.alignment="BOTTOM_CENTER">
+               <children>
+                  <Label text="Camera">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Slider fx:id="inputSlider" blockIncrement="100.0" majorTickUnit="99.0" min="1.0" minorTickCount="0" prefHeight="25.0" prefWidth="50.0" showTickMarks="false" snapToTicks="true" stylesheets="@SliderStyle.css" value="1.0">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Slider>
+                  <Label text="File">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Button fx:id="InformationButton" mnemonicParsing="false" onAction="#openInformationWindow" prefHeight="0.0" prefWidth="0.0" text="?" textFill="#00c4ff" StackPane.alignment="CENTER_RIGHT">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets right="10.0" />
+               </StackPane.margin>
+            </Button>
+         </children>
+      </StackPane>
+   </top>
+</BorderPane>
